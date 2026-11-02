@@ -115,7 +115,8 @@ func openStore(path string, days int) (*store, error) {
 	db.SetMaxOpenConns(1)
 
 	for _, stmt := range []string{
-		`PRAGMA journal_mode = WAL`,
+		// 固定用回滚日志，不启用 WAL；旧库是 WAL 也会在这里切回 DELETE
+		`PRAGMA journal_mode = DELETE`,
 		`PRAGMA busy_timeout = 5000`,
 		`CREATE TABLE IF NOT EXISTS events (
 			id          TEXT    NOT NULL,

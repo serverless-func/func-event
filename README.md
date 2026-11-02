@@ -71,3 +71,7 @@ curl -H "Authorization: Bearer your-token" http://127.0.0.1:9000/latest
 字段说明：`id`、`name`、`success` 必填；`message`、`error` 可选；`reportedAt` 由服务端生成，UTC / RFC 3339。
 
 请求体上限 64 KiB，超限返回 413；参数校验失败返回 400。`GET /ping` 为健康检查，无需 Token。
+
+## 数据库
+
+单文件 SQLite，journal 模式固定为 `DELETE`（不使用 WAL），断开连接后不残留 `-wal` / `-shm` 文件，备份直接复制 `.db` 即可。
